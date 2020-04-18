@@ -28,3 +28,6 @@ for i in `find $root/man-pages/man[1-9] -type f -name '*.[0-9]'`; do
 done
 
 zr-reindex -k man -root $root/../public
+tar -czvf $root/../dist/man.tar.gz $root/../public/man
+
+

@@ -4,9 +4,9 @@ if [ ! -f $root/data/RFC.tar.gz ]; then
     curl -sL https://www.rfc-editor.org/in-notes/tar/RFC-all.tar.gz  > $root/data/RFC.tar.gz
 fi
 
-#pushd $root/data
-#tar --wildcards '*.txt' -xzvf RFC.tar.gz
-#popd
+pushd $root/data
+tar --wildcards '*.txt' -xzvf RFC.tar.gz
+popd
 
 echo > data/pagerank.in
 # simply make 
@@ -24,7 +24,9 @@ for rfc in $(ls -1 $root/data/ | grep txt); do
     popularity=${score:-0}
     echo $rfc score: $popularity
 
-    zr-stdin -k rfc -root $root/../public -title $rfc -id $rfc -popularity $popularity -file $root/data/$rfc
+    zr-stdin -k rfc -root $root/../public/ -title $rfc -id $rfc -popularity $popularity -file $root/data/$rfc
 done
 
 zr-reindex -k rfc -root $root/../public
+tar -czvf $root/../dist/rfc.tar.gz $root/../public/rfc
+
